@@ -1,3 +1,4 @@
+import { createApi } from 'unsplash-js';
 import { createClient } from 'pexels';
 
 export function getPexelsPhotos(query) {
@@ -7,4 +8,17 @@ export function getPexelsPhotos(query) {
         .then((response) => {
             return response.photos;
         })
+}
+
+export function getUnsplashphotos(query) {
+    const unsplash = createApi({
+        accessKey: "Y8eH8WFKyheok3uuHj0RSg-EEz1znKBAhMHguiLEim8"
+    });
+
+    return unsplash.search.getPhotos({
+        query: query
+    }).then((response) => {
+        console.log(response)
+        return response.response.results;
+    })
 }
