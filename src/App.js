@@ -26,13 +26,14 @@ function App() {
                 setIsLoadingUnsplash(false);
                 setIsLoadingUnsplashSuccessful(true);
                 const unsplash = response.map((photo) => {
+                    console.log(photo)
                     const photoObject = {};
                     photoObject.site = "Unsplash";
                     photoObject.url = photo.links.html;
                     photoObject.photoRegular = photo.urls.regular;
                     photoObject.photoGallery = photo.urls.small;
                     photoObject.alt = photo.alt_description;
-                    photoObject.photographer = photo.user.username;
+                    photoObject.photographer = photo.user.name;
                     photoObject.photographerUrl = photo.user.links.html;
                     return photoObject;
                 })
@@ -66,7 +67,6 @@ function App() {
                     return photoObject;
                 })
                 setPhotos((currentPhotos) => {
-                    console.log(currentPhotos, "<-------- currentPhotos")
                     return [...currentPhotos, ...pexels];
                 });
             })
@@ -76,8 +76,6 @@ function App() {
                 setIsLoadingPexelsSuccessful(false);
             })
     }, [])
-
-    console.log(photos)
 
     return (
         <div className="App">

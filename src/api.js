@@ -15,10 +15,8 @@ export function getUnsplashphotos(query) {
         accessKey: "Y8eH8WFKyheok3uuHj0RSg-EEz1znKBAhMHguiLEim8"
     });
 
-    return unsplash.search.getPhotos({
-        query: query
-    }).then((response) => {
-        console.log(response)
-        return response.response.results;
-    })
+    return unsplash.search.getPhotos({ query: query })
+        .then((response) => {
+            return response.response.results;
+        })
 }
