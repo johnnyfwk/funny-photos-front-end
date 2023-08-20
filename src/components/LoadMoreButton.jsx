@@ -1,7 +1,7 @@
-export default function LoadMoreButton({ setNumberOfPhotosToDisplay, numberOfPhotosToIncrement, setPageNumber }) {
+export default function LoadMoreButton({ setNumberOfPhotosToDisplay, numberOfPhotosToDisplayAndIncrement, setPageNumber }) {
     function handleLoadMoreButton() {
         setNumberOfPhotosToDisplay((currentNumberOfPhotosToDisplay) => {
-            return currentNumberOfPhotosToDisplay + numberOfPhotosToIncrement;
+            return currentNumberOfPhotosToDisplay + numberOfPhotosToDisplayAndIncrement;
         })
         setPageNumber((currentPageNumber) => {
             return currentPageNumber + 1;

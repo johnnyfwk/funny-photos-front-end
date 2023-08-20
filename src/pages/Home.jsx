@@ -1,18 +1,90 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import LoadMoreButton from '../components/LoadMoreButton';
 import Photo from '../components/Photo';
+import TagInput from '../components/TagInput';
+import * as api from "../api";
+import * as utils from "../utils";
 
-export default function Home({
-    numberOfPhotosToIncrement,
-    isLoading,
-    photos,
-    setNumberOfPhotosToDisplay,
-    photosToDisplay,
-    setPageNumber
-}) {
+export default function Home() {
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const tag = searchParams.get("tag");
+
+    const numberOfPhotosToDisplayAndIncrement = 50;
+
+    const [isLoading, setIsLoading] = useState(null);
+    
+    const [query, setQuery] = useState("funny");
+    const [pageNumber, setPageNumber] = useState(1);
+
+    const [photos, setPhotos] = useState([]);
+
+    const [numberOfPhotosToDisplay, setNumberOfPhotosToDisplay] = useState(50);
+    const [photosToDisplay, setPhotosToDisplay] = useState([]);
+
+    const [tagInput, setTagInput] = useState("Select a Tag");
+
     const [selectedPhoto, setSelectedPhoto] = useState({});
     const [isPhotoFullSizeContainerVisible, setIsPhotoFullSizeContainerVisible] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(null);
+        api.getUnsplashPhotos(query, pageNumber)
+            .then((response) => {
+                setIsLoading(false);
+                const unsplash = response.map((photo) => {
+                    return utils.createPhotoObject(
+                        "Unsplash",
+                        photo.links.html,
+                        photo.urls.regular,
+                        photo.urls.small,
+                        photo.alt_description,
+                        photo.user.name,
+                        photo.user.links.html
+                    );
+                })
+                setPhotos((currentPhotos) => {
+                    return [...currentPhotos, ...unsplash];
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    }, [pageNumber, query])
+
+    useEffect(() => {
+        setIsLoading(null);
+        api.getPexelsPhotos(query, pageNumber)
+            .then((response) => {
+                setIsLoading(false);
+                const pexels = response.map((photo) => {
+                    return utils.createPhotoObject(
+                        "Pexels",
+                        photo.url,
+                        photo.src.original,
+                        photo.src.medium,
+                        photo.alt,
+                        photo.photographer,
+                        photo.photographer_url
+                    );
+                })
+                setPhotos((currentPhotos) => {
+                    setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
+                    return [...currentPhotos, ...pexels];
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    }, [pageNumber, query])
+
+    useEffect(() => {
+        const updatedPhotosToDisplay = photos.slice(0, numberOfPhotosToDisplay);
+        setPhotosToDisplay(updatedPhotosToDisplay);
+    }, [numberOfPhotosToDisplay])
 
     function handleHidePhotoFullSizeContainer() {
         setIsPhotoFullSizeContainerVisible(false);
@@ -24,14 +96,24 @@ export default function Home({
 
     return (
         <div>
-            <Helmet>
-                <link rel="canonical" href="https://funnyphotos.co.uk/" />
-                <title>Find funny photos on the Internet • FunnyPhotos.co.uk</title>
-                <meta name="description" content="Browse funny photos from stock photography sites." />
-            </Helmet>
-
+            {tag === null
+                ? <Helmet>
+                    <link rel="canonical" href="https://funnyphotos.co.uk/" />
+                    <title>Find funny photos on the Internet • FunnyPhotos.co.uk</title>
+                    <meta name="description" content="Browse funny photos on the Internet." />
+                </Helmet>
+                : <Helmet>
+                    <link rel="canonical" href={`https://funnyphotos.co.uk/?tag=${tag}`} />
+                    <title>Funny {utils.convertSlugToHeading(tag)} Photos • FunnyPhotos.co.uk</title>
+                    <meta name="description" content={`Browse funny ${utils.convertSlugToText(tag)} photos on the Internet.`} />
+                </Helmet>
+            }
+            
             <header className="max-width">
-                <h1>Find funny photos on the Internet</h1>
+                {tag === null
+                    ? <h1>Find funny photos on the Internet</h1>
+                    : <h1>Funny {utils.convertSlugToHeading(tag)} Photos</h1>
+                }
             </header>
 
             <main className="max-width">
@@ -39,6 +121,17 @@ export default function Home({
                     ? <div>Loading photos...</div>
                     : null
                 }
+
+                <TagInput
+                    numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                    tagInput={tagInput}
+                    setTagInput={setTagInput}
+                    setQuery={setQuery}
+                    setPageNumber={setPageNumber}
+                    setPhotos={setPhotos}
+                    setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                    setPhotosToDisplay={setPhotosToDisplay}
+                />
 
                 {photosToDisplay.length === 0
                     ? <div>No photos to display.</div>
@@ -52,7 +145,7 @@ export default function Home({
                 {photosToDisplay.length < photos.length
                     ? <LoadMoreButton
                         setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
-                        numberOfPhotosToIncrement={numberOfPhotosToIncrement}
+                        numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
                         setPageNumber={setPageNumber}
                     />
                     : null
