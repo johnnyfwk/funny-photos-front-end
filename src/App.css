@@ -1,7 +1,7 @@
 :root {
     --black: #000000;
     --grey: #dbdbdb;
-    --light-grey: #e7e7e7;
+    --light-grey: #f1f1f1;
     --dark-grey: #808080;
     --white: #FFFFFF;
     --red: #FF0000;
@@ -24,6 +24,11 @@
     --padding-left-and-right: 20px;
 }
 
+@font-face {
+    font-family: Nunito;
+    src: url("../src/assets/fonts/Nunito-VariableFont_wght.ttf");
+}
+
 * {
     margin: 0;
     box-sizing: border-box;
@@ -41,10 +46,16 @@
 
 body {
     background: var(--night);
+    font-family: Nunito;
+}
+
+select {
+    font-family: Nunito;
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    line-height: 3rem;
 }
 
 p,
@@ -58,7 +69,6 @@ ol {
 }
 
 #logo {
-    /* background: var(--light-grey); */
     padding: 10px var(--padding-left-and-right);
     font-size: 1.5rem;
 }
@@ -75,14 +85,16 @@ ol {
 }
 
 header {
-    /* background: var(--orange); */
     padding: var(--padding-left-and-right) var(--padding-left-and-right) 0 var(--padding-left-and-right);
     display: grid;
     gap: 10px;
 }
 
+header p {
+    color: var(--dark-grey);
+}
+
 main {
-    /* background: pink; */
     padding: var(--padding-left-and-right);
 }
 
@@ -93,7 +105,6 @@ main {
 
 #tags {
     padding: 10px;
-    /* border-radius: 20px; */
 }
 
 #load-more-button {
@@ -147,7 +158,7 @@ main {
 
 #photo-full-size-container img {
     width: 100%;
-    max-height: 75vh;
+    max-height: 60vh;
     object-fit: contain;
 }
 
@@ -156,7 +167,6 @@ main {
 }
 
 footer {
-    /* background: var(--orange); */
     padding: var(--padding-left-and-right);
     display: grid;
     gap: 20px;
