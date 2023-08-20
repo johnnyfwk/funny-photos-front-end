@@ -99,8 +99,8 @@ export default function Home() {
             {tag === null
                 ? <Helmet>
                     <link rel="canonical" href="https://funnyphotos.co.uk/" />
-                    <title>Find funny photos on the Internet • FunnyPhotos.co.uk</title>
-                    <meta name="description" content="Browse funny photos on the Internet." />
+                    <title>Find funny photos of almost anything • FunnyPhotos.co.uk</title>
+                    <meta name="description" content="Browse funny photos sourced from stock photo and photography sites." />
                 </Helmet>
                 : <Helmet>
                     <link rel="canonical" href={`https://funnyphotos.co.uk/?tag=${tag}`} />
@@ -111,8 +111,12 @@ export default function Home() {
             
             <header className="max-width">
                 {tag === null
-                    ? <h1>Find funny photos on the Internet</h1>
+                    ? <h1>Find funny photos of almost anything</h1>
                     : <h1>Funny {utils.convertSlugToHeading(tag)} Photos</h1>
+                }
+                {tag === null
+                    ? <p>Browse funny photos of almost anything sourced from stock photo and photography sites.</p>
+                    : null
                 }
             </header>
 
