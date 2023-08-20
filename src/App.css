@@ -1,7 +1,8 @@
 :root {
     --black: #000000;
-    --grey: #808080;
-    --light-grey: #b8b8b8;
+    --grey: #dbdbdb;
+    --light-grey: #e7e7e7;
+    --dark-grey: #808080;
     --white: #FFFFFF;
     --red: #FF0000;
     --orange: #FF9900;
@@ -12,6 +13,11 @@
     --violet: #8F00FF;
     --cyan: #00FFFF;
     --lime: #32CD32;
+
+    --night: #0C0F0A;
+    --rose: #FF206E;
+    --yellow: #FBFF12;
+    --turquoise: #41EAD4;
 
     --max-width: 1200px;
 
@@ -33,6 +39,10 @@
     margin: auto;
 }
 
+body {
+    background: var(--night);
+}
+
 h1 {
     font-size: 3rem;
 }
@@ -43,30 +53,56 @@ ol {
     line-height: 1.5rem;
 }
 
-#logo {
+#logo-container {
     background: var(--light-grey);
+}
+
+#logo {
+    /* background: var(--light-grey); */
     padding: 10px var(--padding-left-and-right);
     font-size: 1.5rem;
 }
 
+#logo a:link,
+#logo a:active,
+#logo a:visited {
+    color: var(--night);
+}
+
+#header-container,
+#main-container {
+    background: var(--white);
+}
+
 header {
-    background: var(--orange);
-    padding: var(--padding-left-and-right);
+    /* background: var(--orange); */
+    padding: var(--padding-left-and-right) var(--padding-left-and-right) 0 var(--padding-left-and-right);
     display: grid;
     gap: 10px;
 }
 
 main {
-    background: pink;
+    /* background: pink; */
     padding: var(--padding-left-and-right);
 }
 
+#home main {
+    display: grid;
+    gap: 20px;
+}
+
+#tags {
+    padding: 10px;
+    /* border-radius: 20px; */
+}
+
 #load-more-button {
-    background: var(--cyan);
+    background: var(--turquoise);
     padding: 15px 30px;
     border-radius: 50px;
     text-align: center;
     cursor: pointer;
+    font-weight: bold
 }
 
 .photos-container {
@@ -103,6 +139,12 @@ main {
     height: 100%;
 }
 
+#photo-full-size-container a:link,
+#photo-full-size-container a:active,
+#photo-full-size-container a:visited {
+    color: var(--rose);
+}
+
 #photo-full-size-container img {
     width: 100%;
     max-height: 75vh;
@@ -114,12 +156,39 @@ main {
 }
 
 footer {
-    background: var(--light-grey);
+    /* background: var(--orange); */
     padding: var(--padding-left-and-right);
+    display: grid;
+    gap: 20px;
+}
+
+footer a:link,
+footer a:active,
+footer a:visited {
+    color: var(--white);
+}
+
+.footer-links {
+    display: grid;
+    gap: 20px;
+}
+
+#copyright {
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    color: var(--dark-grey);
 }
 
 #terms-and-conditions main,
 #contact main {
     display: grid;
-    gap: 20px;
+    gap: 15px;
+}
+
+@media only screen and (min-width: 600px) {
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+    }
 }
