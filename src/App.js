@@ -5,37 +5,36 @@ import Logo from './components/Logo';
 import Home from './pages/Home';
 import Footer from './components/Footer';
 import * as api from './api';
-import photosJS from './content/photos';
+import * as utils from './utils';
 
 function App() {
+    const numberOfPhotosToIncrement = 50;
+
+    const [isLoading, setIsLoading] = useState(null);
+
     const [query, setQuery] = useState("funny");
+    const [pageNumber, setPageNumber] = useState(1);
+
     const [photos, setPhotos] = useState([]);
 
-    const [isLoadingUnsplash, setIsLoadingUnsplash] = useState(true);
-    const [isLoadingUnsplashSuccessful, setIsLoadingUnsplashSuccessful] = useState(null);
-    
-    const [isLoadingPexels, setIsLoadingPexels] = useState(true);
-    const [isLoadingPexelsSuccessful, setIsLoadingPexelsSuccessful] = useState(null);
+    const [numberOfPhotosToDisplay, setNumberOfPhotosToDisplay] = useState(50);
+    const [photosToDisplay, setPhotosToDisplay] = useState([]);
 
     useEffect(() => {
-        setIsLoadingUnsplash(true);
-        setIsLoadingUnsplashSuccessful(null);
-        api.getUnsplashphotos(query)
+        setIsLoading(null);
+        api.getUnsplashPhotos(query, pageNumber)
             .then((response) => {
-                console.log(response);
-                setIsLoadingUnsplash(false);
-                setIsLoadingUnsplashSuccessful(true);
+                setIsLoading(false);
                 const unsplash = response.map((photo) => {
-                    console.log(photo)
-                    const photoObject = {};
-                    photoObject.site = "Unsplash";
-                    photoObject.url = photo.links.html;
-                    photoObject.photoRegular = photo.urls.regular;
-                    photoObject.photoGallery = photo.urls.small;
-                    photoObject.alt = photo.alt_description;
-                    photoObject.photographer = photo.user.name;
-                    photoObject.photographerUrl = photo.user.links.html;
-                    return photoObject;
+                    return utils.createPhotoObject(
+                        "Unsplash",
+                        photo.links.html,
+                        photo.urls.regular,
+                        photo.urls.small,
+                        photo.alt_description,
+                        photo.user.name,
+                        photo.user.links.html
+                    );
                 })
                 setPhotos((currentPhotos) => {
                     return [...currentPhotos, ...unsplash];
@@ -43,39 +42,41 @@ function App() {
             })
             .catch((error) => {
                 console.log(error);
-                setIsLoadingUnsplash(false);
-                setIsLoadingUnsplashSuccessful(false);
+                setIsLoading(false);
             })
-    }, [])
+    }, [pageNumber])
 
     useEffect(() => {
-        setIsLoadingPexels(true);
-        setIsLoadingPexelsSuccessful(null);
-        api.getPexelsPhotos(query)
+        setIsLoading(null);
+        api.getPexelsPhotos(query, pageNumber)
             .then((response) => {
-                setIsLoadingPexels(false);
-                setIsLoadingPexelsSuccessful(true);
+                setIsLoading(false);
                 const pexels = response.map((photo) => {
-                    const photoObject = {};
-                    photoObject.site = "Pexels";
-                    photoObject.url = photo.url;
-                    photoObject.photoRegular = photo.src.original;
-                    photoObject.photoGallery = photo.src.medium;
-                    photoObject.alt = photo.alt;
-                    photoObject.photographer = photo.photographer;
-                    photoObject.photographerUrl = photo.photographer_url;
-                    return photoObject;
+                    return utils.createPhotoObject(
+                        "Pexels",
+                        photo.url,
+                        photo.src.original,
+                        photo.src.medium,
+                        photo.alt,
+                        photo.photographer,
+                        photo.photographer_url
+                    );
                 })
                 setPhotos((currentPhotos) => {
+                    setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
                     return [...currentPhotos, ...pexels];
                 });
             })
             .catch((error) => {
                 console.log(error);
-                setIsLoadingPexels(false);
-                setIsLoadingPexelsSuccessful(false);
+                setIsLoading(false);
             })
-    }, [])
+    }, [pageNumber])
+
+    useEffect(() => {
+        const updatedPhotosToDisplay = photos.slice(0, numberOfPhotosToDisplay);
+        setPhotosToDisplay(updatedPhotosToDisplay);
+    }, [numberOfPhotosToDisplay])
 
     return (
         <div className="App">
@@ -85,9 +86,12 @@ function App() {
                     path="/"
                     element={
                         <Home
-                            isLoadingPexels={isLoadingPexels}
-                            isLoadingPexelsSuccessful={isLoadingPexelsSuccessful}
+                            numberOfPhotosToIncrement={numberOfPhotosToIncrement}
+                            isLoading={isLoading}
                             photos={photos}
+                            setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                            photosToDisplay={photosToDisplay}
+                            setPageNumber={setPageNumber}
                         />
                     }
                 ></Route>
