@@ -30,14 +30,11 @@ export default function TagInput({
     }
 
     return (
-        <div>
-            <label htmlFor="tags">Select a Tag:</label>
-            <select name="tags" id="tags" value={tagInput} onChange={handleTagInput}>
-                <option value="all-tags">All Tags</option>
-                {tags.map((tag) => {
-                    return <option key={tag} value={utils.convertHeadingToSlug(tag)}>{tag}</option>
-                })}
-            </select>
-        </div>
+        <select name="tags" id="tags" value={tagInput} onChange={handleTagInput}>
+            <option value="all-tags">All Tags</option>
+            {tags.map((tag) => {
+                return <option key={tag} value={utils.convertHeadingToSlug(tag)}>{tag}</option>
+            })}
+        </select>
     )
 }

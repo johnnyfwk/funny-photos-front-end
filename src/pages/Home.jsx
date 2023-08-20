@@ -95,7 +95,7 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div id="home">
             {tag === null
                 ? <Helmet>
                     <link rel="canonical" href="https://funnyphotos.co.uk/" />
@@ -109,59 +109,63 @@ export default function Home() {
                 </Helmet>
             }
             
-            <header className="max-width">
-                {tag === null
-                    ? <h1>Find funny photos of almost anything</h1>
-                    : <h1>Funny {utils.convertSlugToHeading(tag)} Photos</h1>
-                }
-                {tag === null
-                    ? <p>Browse funny photos of almost anything sourced from stock photo and photography sites.</p>
-                    : null
-                }
-            </header>
+            <div id="header-container">
+                <header className="max-width">
+                    {tag === null
+                        ? <h1>Find funny photos of almost anything</h1>
+                        : <h1>Funny {utils.convertSlugToHeading(tag)} Photos</h1>
+                    }
+                    {tag === null
+                        ? <p>Browse funny photos of almost anything sourced from stock photo and photography sites.</p>
+                        : null
+                    }
+                </header>
+            </div>
 
-            <main className="max-width">
-                {isLoading
-                    ? <div>Loading photos...</div>
-                    : null
-                }
+            <div id="main-container">
+                <main className="max-width">
+                    {isLoading
+                        ? <div>Loading photos...</div>
+                        : null
+                    }
 
-                <TagInput
-                    numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
-                    tagInput={tagInput}
-                    setTagInput={setTagInput}
-                    setQuery={setQuery}
-                    setPageNumber={setPageNumber}
-                    setPhotos={setPhotos}
-                    setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
-                    setPhotosToDisplay={setPhotosToDisplay}
-                />
-
-                {photosToDisplay.length === 0
-                    ? <div>No photos to display.</div>
-                    : <div className="photos-container">
-                        {photosToDisplay.map((photo) => {
-                            return <Photo key={photo.url} photo={photo} setIsPhotoFullSizeContainerVisible={setIsPhotoFullSizeContainerVisible} setSelectedPhoto={setSelectedPhoto} />
-                        })}
-                    </div>
-                }
-
-                {photosToDisplay.length < photos.length
-                    ? <LoadMoreButton
-                        setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                    <TagInput
                         numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                        tagInput={tagInput}
+                        setTagInput={setTagInput}
+                        setQuery={setQuery}
                         setPageNumber={setPageNumber}
+                        setPhotos={setPhotos}
+                        setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                        setPhotosToDisplay={setPhotosToDisplay}
                     />
-                    : null
-                }
 
-                <div id="photo-full-size-container" style={stylePhotoFullSizeContainer}>
-                    <h2>{selectedPhoto.alt}</h2>
-                    <img src={selectedPhoto.src} alt={selectedPhoto.alt} />
-                    <div>Photo by <a href={selectedPhoto.photographerUrl} target="_blank" rel="noreferrer">{selectedPhoto.photographer}</a> on <a href={selectedPhoto.url} target="_blank" rel="noreferrer">{selectedPhoto.site}</a></div>
-                    <div id="close-photo-full-size-container-button" onClick={handleHidePhotoFullSizeContainer}>[x]</div>
-                </div>
-            </main>
+                    {photosToDisplay.length === 0
+                        ? <div>No photos to display.</div>
+                        : <div className="photos-container">
+                            {photosToDisplay.map((photo) => {
+                                return <Photo key={photo.url} photo={photo} setIsPhotoFullSizeContainerVisible={setIsPhotoFullSizeContainerVisible} setSelectedPhoto={setSelectedPhoto} />
+                            })}
+                        </div>
+                    }
+
+                    {photosToDisplay.length < photos.length
+                        ? <LoadMoreButton
+                            setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                            numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                            setPageNumber={setPageNumber}
+                        />
+                        : null
+                    }
+
+                    <div id="photo-full-size-container" style={stylePhotoFullSizeContainer}>
+                        <h2>{selectedPhoto.alt}</h2>
+                        <img src={selectedPhoto.src} alt={selectedPhoto.alt} />
+                        <div>Photo by <a href={selectedPhoto.photographerUrl} target="_blank" rel="noreferrer">{selectedPhoto.photographer}</a> on <a href={selectedPhoto.url} target="_blank" rel="noreferrer">{selectedPhoto.site}</a></div>
+                        <div id="close-photo-full-size-container-button" onClick={handleHidePhotoFullSizeContainer}>[x]</div>
+                    </div>
+                </main>
+            </div>
         </div>
     )
 }
