@@ -130,4 +130,6 @@ const tags = [
     "possum",
 ];
 
-module.export = [... new Set(tags)].sort();
+const tagsSorted = [... new Set(tags)].sort();
+
+module.exports = tagsSorted;
