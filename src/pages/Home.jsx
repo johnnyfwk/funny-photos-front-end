@@ -35,58 +35,58 @@ export default function Home({
     const [selectedPhoto, setSelectedPhoto] = useState({});
     const [isPhotoFullSizeContainerVisible, setIsPhotoFullSizeContainerVisible] = useState(false);
 
-    useEffect(() => {
-        setIsLoading(null);
-        api.getUnsplashPhotos(query, pageNumber)
-            .then((response) => {
-                setIsLoading(false);
-                const unsplash = response.map((photo) => {
-                    return utils.createPhotoObject(
-                        "Unsplash",
-                        photo.links.html,
-                        photo.urls.regular,
-                        photo.urls.small,
-                        photo.alt_description,
-                        photo.user.name,
-                        photo.user.links.html
-                    );
-                })
-                setPhotos((currentPhotos) => {
-                    return [...currentPhotos, ...unsplash];
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
-            })
-    }, [pageNumber, query])
+    // useEffect(() => {
+    //     setIsLoading(null);
+    //     api.getUnsplashPhotos(query, pageNumber)
+    //         .then((response) => {
+    //             setIsLoading(false);
+    //             const unsplash = response.map((photo) => {
+    //                 return utils.createPhotoObject(
+    //                     "Unsplash",
+    //                     photo.links.html,
+    //                     photo.urls.regular,
+    //                     photo.urls.small,
+    //                     photo.alt_description,
+    //                     photo.user.name,
+    //                     photo.user.links.html
+    //                 );
+    //             })
+    //             setPhotos((currentPhotos) => {
+    //                 return [...currentPhotos, ...unsplash];
+    //             });
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setIsLoading(false);
+    //         })
+    // }, [pageNumber, query])
 
-    useEffect(() => {
-        setIsLoading(null);
-        api.getPexelsPhotos(query, pageNumber)
-            .then((response) => {
-                setIsLoading(false);
-                const pexels = response.map((photo) => {
-                    return utils.createPhotoObject(
-                        "Pexels",
-                        photo.url,
-                        photo.src.original,
-                        photo.src.medium,
-                        photo.alt,
-                        photo.photographer,
-                        photo.photographer_url
-                    );
-                })
-                setPhotos((currentPhotos) => {
-                    setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
-                    return [...currentPhotos, ...pexels];
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
-            })
-    }, [pageNumber, query])
+    // useEffect(() => {
+    //     setIsLoading(null);
+    //     api.getPexelsPhotos(query, pageNumber)
+    //         .then((response) => {
+    //             setIsLoading(false);
+    //             const pexels = response.map((photo) => {
+    //                 return utils.createPhotoObject(
+    //                     "Pexels",
+    //                     photo.url,
+    //                     photo.src.original,
+    //                     photo.src.medium,
+    //                     photo.alt,
+    //                     photo.photographer,
+    //                     photo.photographer_url
+    //                 );
+    //             })
+    //             setPhotos((currentPhotos) => {
+    //                 setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
+    //                 return [...currentPhotos, ...pexels];
+    //             });
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setIsLoading(false);
+    //         })
+    // }, [pageNumber, query])
 
     useEffect(() => {
         const updatedPhotosToDisplay = photos.slice(0, numberOfPhotosToDisplay);

@@ -40,14 +40,14 @@ export function convertSlugToHeading(slug) {
         if (slugCopy === "animals") {
             heading = "Animal";
         }
-        else if (slugCopy === "cats") {
-            heading = "Cat";
+        else if (slugCopy === "occasions") {
+            heading = "Occasion";
         }
-        else if (slugCopy === "dogs") {
-            heading = "Dog";
+        else if (slugCopy === "vehicles") {
+            heading = "Vehicle";
         }
-        else if (slugCopy === "faces") {
-            heading = "Face";
+        else if (slugCopy === "movies") {
+            heading = "Movie";
         }
         else {
             heading = slugCopy[0].toUpperCase() + slugCopy.slice(1);
@@ -68,14 +68,14 @@ export function convertSlugToText(slug) {
         if (slugCopy === "animals") {
             text = "animal";
         }
-        else if (slugCopy === "cats") {
-            text = "cat";
+        else if (slugCopy === "occasions") {
+            text = "occasion";
         }
-        else if (slugCopy === "dogs") {
-            text = "dog";
+        else if (slugCopy === "vehicles") {
+            text = "vehicle";
         }
-        else if (slugCopy === "faces") {
-            text = "face";
+        else if (slugCopy === "movies") {
+            text = "movie";
         }
         else {
             text = slugCopy;
