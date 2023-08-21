@@ -11,7 +11,7 @@ import Contact from './pages/Contact';
 import TermsAndConditions from './pages/TermsAndConditions';
 
 function App() {
-    const numberOfPhotosToDisplayAndIncrement = 50;
+    const numberOfPhotosToDisplayAndIncrement = 100;
 
     const [query, setQuery] = useState("funny");
     const [pageNumber, setPageNumber] = useState(1);
