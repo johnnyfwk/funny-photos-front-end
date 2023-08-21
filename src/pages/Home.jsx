@@ -3,83 +3,85 @@ import { useSearchParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import LoadMoreButton from '../components/LoadMoreButton';
 import Photo from '../components/Photo';
-import TagInput from '../components/TagInput';
+import CategoryInput from '../components/CategoryInput';
 import * as api from "../api";
 import * as utils from "../utils";
 
-export default function Home() {
+export default function Home({
+    numberOfPhotosToDisplayAndIncrement,
+    query,
+    setQuery,
+    pageNumber,
+    setPageNumber,
+    photos,
+    setPhotos,
+    numberOfPhotosToDisplay,
+    setNumberOfPhotosToDisplay,
+    photosToDisplay,
+    setPhotosToDisplay,
+    categoryInput,
+    setCategoryInput
+}) {
     const [ searchParams, setSearchParams ] = useSearchParams();
-    const tag = searchParams.get("tag");
-
-    const numberOfPhotosToDisplayAndIncrement = 50;
+    const category = searchParams.get("category");
 
     const [isLoading, setIsLoading] = useState(null);
-    
-    const [query, setQuery] = useState("funny");
-    const [pageNumber, setPageNumber] = useState(1);
-
-    const [photos, setPhotos] = useState([]);
-
-    const [numberOfPhotosToDisplay, setNumberOfPhotosToDisplay] = useState(50);
-    const [photosToDisplay, setPhotosToDisplay] = useState([]);
-
-    const [tagInput, setTagInput] = useState("Select a Tag");
 
     const [selectedPhoto, setSelectedPhoto] = useState({});
     const [isPhotoFullSizeContainerVisible, setIsPhotoFullSizeContainerVisible] = useState(false);
 
-    useEffect(() => {
-        setIsLoading(null);
-        api.getUnsplashPhotos(query, pageNumber)
-            .then((response) => {
-                setIsLoading(false);
-                const unsplash = response.map((photo) => {
-                    return utils.createPhotoObject(
-                        "Unsplash",
-                        photo.links.html,
-                        photo.urls.regular,
-                        photo.urls.small,
-                        photo.alt_description,
-                        photo.user.name,
-                        photo.user.links.html
-                    );
-                })
-                setPhotos((currentPhotos) => {
-                    return [...currentPhotos, ...unsplash];
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
-            })
-    }, [pageNumber, query])
+    // useEffect(() => {
+    //     setIsLoading(null);
+    //     api.getUnsplashPhotos(query, pageNumber)
+    //         .then((response) => {
+    //             setIsLoading(false);
+    //             const unsplash = response.map((photo) => {
+    //                 return utils.createPhotoObject(
+    //                     "Unsplash",
+    //                     photo.links.html,
+    //                     photo.urls.regular,
+    //                     photo.urls.small,
+    //                     photo.alt_description,
+    //                     photo.user.name,
+    //                     photo.user.links.html
+    //                 );
+    //             })
+    //             setPhotos((currentPhotos) => {
+    //                 return [...currentPhotos, ...unsplash];
+    //             });
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setIsLoading(false);
+    //         })
+    // }, [pageNumber, query])
 
-    useEffect(() => {
-        setIsLoading(null);
-        api.getPexelsPhotos(query, pageNumber)
-            .then((response) => {
-                setIsLoading(false);
-                const pexels = response.map((photo) => {
-                    return utils.createPhotoObject(
-                        "Pexels",
-                        photo.url,
-                        photo.src.original,
-                        photo.src.medium,
-                        photo.alt,
-                        photo.photographer,
-                        photo.photographer_url
-                    );
-                })
-                setPhotos((currentPhotos) => {
-                    setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
-                    return [...currentPhotos, ...pexels];
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
-            })
-    }, [pageNumber, query])
+    // useEffect(() => {
+    //     setIsLoading(null);
+    //     api.getPexelsPhotos(query, pageNumber)
+    //         .then((response) => {
+    //             setIsLoading(false);
+    //             const pexels = response.map((photo) => {
+    //                 return utils.createPhotoObject(
+    //                     "Pexels",
+    //                     photo.url,
+    //                     photo.src.original,
+    //                     photo.src.medium,
+    //                     photo.alt,
+    //                     photo.photographer,
+    //                     photo.photographer_url
+    //                 );
+    //             })
+    //             setPhotos((currentPhotos) => {
+    //                 setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
+    //                 return [...currentPhotos, ...pexels];
+    //             });
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setIsLoading(false);
+    //         })
+    // }, [pageNumber, query])
 
     useEffect(() => {
         const updatedPhotosToDisplay = photos.slice(0, numberOfPhotosToDisplay);
@@ -96,27 +98,27 @@ export default function Home() {
 
     return (
         <div id="home">
-            {tag === null
+            {category === null
                 ? <Helmet>
                     <link rel="canonical" href="https://funnyphotos.co.uk/" />
-                    <title>Discover funny photos from awesome photographers • FunnyPhotos.co.uk</title>
-                    <meta name="description" content="Browse funny photos by photographers from stock photo and photography sites." />
+                    <title>Find funny photos of almost anything • FunnyPhotos.co.uk</title>
+                    <meta name="description" content="Browse funny photos of almost anything from stock photo, photography, and media sites." />
                 </Helmet>
                 : <Helmet>
-                    <link rel="canonical" href={`https://funnyphotos.co.uk/?tag=${tag}`} />
-                    <title>Funny {utils.convertSlugToHeading(tag)} Photos • FunnyPhotos.co.uk</title>
-                    <meta name="description" content={`Browse funny ${utils.convertSlugToText(tag)} photos on the Internet.`} />
+                    <link rel="canonical" href={`https://funnyphotos.co.uk/?category=${category}`} />
+                    <title>Funny {utils.convertSlugToHeading(category)} Photos • FunnyPhotos.co.uk</title>
+                    <meta name="description" content={`Browse funny ${utils.convertSlugToText(category)} photos on the Internet.`} />
                 </Helmet>
             }
             
             <div id="header-container">
                 <header className="max-width">
-                    {tag === null
-                        ? <h1>Discover funny photos from awesome photographers</h1>
-                        : <h1>Funny {utils.convertSlugToHeading(tag)} Photos</h1>
+                    {category === null
+                        ? <h1>Find funny photos of almost anything</h1>
+                        : <h1>Funny {utils.convertSlugToHeading(category)} Photos</h1>
                     }
-                    {tag === null
-                        ? <p>Browse funny photos by photographers from stock photo and photography sites.</p>
+                    {category === null
+                        ? <p>Browse funny photos from stock photo, photography, and media sites.</p>
                         : null
                     }
                 </header>
@@ -129,10 +131,10 @@ export default function Home() {
                         : null
                     }
 
-                    <TagInput
+                    <CategoryInput
                         numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
-                        tagInput={tagInput}
-                        setTagInput={setTagInput}
+                        categoryInput={categoryInput}
+                        setCategoryInput={setCategoryInput}
                         setQuery={setQuery}
                         setPageNumber={setPageNumber}
                         setPhotos={setPhotos}

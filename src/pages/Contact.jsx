@@ -17,7 +17,7 @@ export default function Contact() {
             
             <div id="main-container">
                 <main className="max-width">
-                    <p>If you have any queries or suggestions for the site, you can get in touch with us at hi@funnyimages.co.uk.</p>
+                    <p>If you have any queries or suggestions for the site, you can get in touch with us at hi@funnyphotos.co.uk.</p>
                 </main>
             </div>
         </div>

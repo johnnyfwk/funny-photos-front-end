@@ -1,12 +1,27 @@
 import { Link } from "react-router-dom";
 
-export default function Logo() {
+export default function Logo({
+    numberOfPhotosToDisplayAndIncrement,
+    setQuery,
+    setPageNumber,
+    setPhotos,
+    setNumberOfPhotosToDisplay,
+    setPhotosToDisplay,
+    categoryInput,
+    setCategoryInput
+}) {
+    function handleLogo() {
+        if (categoryInput !== "all-categories") {
+            setQuery("funny");
+            setPageNumber(1);
+            setPhotos([]);
+            setNumberOfPhotosToDisplay(numberOfPhotosToDisplayAndIncrement);
+            setPhotosToDisplay([]);
+            setCategoryInput("all-categories");
+        }
+    }
+
     return (
-        <div id="logo-container">
-            <div id="logo" className="max-width">
-                <Link to="/" className="max-width">FunnyPhotos.co.uk</Link>
-            </div>
-        </div>
-       
+        <Link to="/" onClick={handleLogo} id="logo">FunnyPhotos.co.uk</Link>
     )
 }
