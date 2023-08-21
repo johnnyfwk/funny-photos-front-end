@@ -18,7 +18,6 @@ export default function Search({
     }
 
     function handleSearchButton() {
-        console.log("funny " + searchInput);
         setQuery("funny " + searchInput);
         setPageNumber(1);
         setPhotos([]);

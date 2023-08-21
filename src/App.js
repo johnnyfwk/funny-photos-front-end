@@ -23,8 +23,6 @@ function App() {
     const [searchInput, setSearchInput] = useState("");
     const [tagInput, setTagInput] = useState("");
 
-    console.log(query, "<------ query")
-
     return (
         <div className="App">
             <div id="logo-and-nav-container">
