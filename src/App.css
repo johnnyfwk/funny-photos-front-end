@@ -2,6 +2,8 @@
     --black: #000000;
     --dark-grey: #5c5c5c;
     --grey: #777777;
+    --silver: #C0C0C0;
+    --light-silver: #dfdfdf;
     --light-grey: #f1f1f1;
     --white: #FFFFFF;
     --red: #FF0000;
@@ -49,10 +51,6 @@ body {
     font-family: Nunito;
 }
 
-select {
-    font-family: Nunito;
-}
-
 h1 {
     font-size: 2.5rem;
     line-height: 3rem;
@@ -62,6 +60,36 @@ p,
 ul,
 ol {
     line-height: 1.5rem;
+}
+
+input,
+select,
+button {
+    font-family: Nunito;
+    padding: 10px;
+}
+
+input,
+select {
+    border: 1px solid var(--light-silver);
+    background: var(--white)
+}
+
+select {
+    cursor: pointer;
+}
+
+button {
+    border: 1px solid var(--night);
+    background: var(--night);
+    color: var(--white);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#search {
+    display: grid;
+    grid-template-columns: auto 70px;
 }
 
 #logo-and-nav-container {
@@ -187,11 +215,12 @@ main {
 
 #home main {
     display: grid;
-    gap: 20px;
+    gap: 10px;
 }
 
-#categories {
-    padding: 10px;
+#components-search-and-categories {
+    display: grid;
+    gap: 10px;
 }
 
 #load-more-button {
@@ -306,9 +335,17 @@ footer a:hover {
         gap: 20px;
     }
 
+    #nav-link-home {
+        display: none;
+    }
+
     #show-nav-button,
     #hide-nav-button {
         display: none;
+    }
+
+    #components-search-and-categories {
+        grid-template-columns: auto 20%;
     }
 
     .footer-links {

@@ -10,7 +10,7 @@ import Contact from './pages/Contact';
 import TermsAndConditions from './pages/TermsAndConditions';
 
 function App() {
-    const numberOfPhotosToDisplayAndIncrement = 100;
+    const numberOfPhotosToDisplayAndIncrement = 50;
 
     const [query, setQuery] = useState("funny");
     const [pageNumber, setPageNumber] = useState(1);
@@ -19,6 +19,9 @@ function App() {
     const [photosToDisplay, setPhotosToDisplay] = useState([]);
     const [categoryInput, setCategoryInput] = useState("all-categories");
     const [isNavVisible, setIsNavVisible] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+
+    console.log(query, "<------ query")
 
     return (
         <div className="App">
@@ -33,6 +36,7 @@ function App() {
                         setPhotosToDisplay={setPhotosToDisplay}
                         categoryInput={categoryInput}
                         setCategoryInput={setCategoryInput}
+                        setSearchInput={setSearchInput}
                     />
                     <Nav
                         isNavVisible={isNavVisible}
@@ -61,6 +65,8 @@ function App() {
                             setPhotosToDisplay={setPhotosToDisplay}
                             categoryInput={categoryInput}
                             setCategoryInput={setCategoryInput}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
                         />
                     }
                 ></Route>
@@ -82,6 +88,7 @@ function App() {
                 setPhotosToDisplay={setPhotosToDisplay}
                 categoryInput={categoryInput}
                 setCategoryInput={setCategoryInput}
+                setSearchInput={setSearchInput}
             />
         </div>
     );

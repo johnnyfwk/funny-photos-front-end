@@ -8,7 +8,8 @@ export default function Logo({
     setNumberOfPhotosToDisplay,
     setPhotosToDisplay,
     categoryInput,
-    setCategoryInput
+    setCategoryInput,
+    setSearchInput
 }) {
     function handleLogo() {
         if (categoryInput !== "all-categories") {
@@ -18,6 +19,7 @@ export default function Logo({
             setNumberOfPhotosToDisplay(numberOfPhotosToDisplayAndIncrement);
             setPhotosToDisplay([]);
             setCategoryInput("all-categories");
+            setSearchInput("");
         }
     }
 
