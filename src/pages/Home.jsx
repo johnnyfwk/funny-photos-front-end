@@ -28,37 +28,38 @@ export default function Home({
     const [ searchParams, setSearchParams ] = useSearchParams();
     const category = searchParams.get("category");
     const search = searchParams.get("search");
+    const tag = searchParams.get("tag");
 
     const [isLoading, setIsLoading] = useState(null);
 
     const [selectedPhoto, setSelectedPhoto] = useState({});
     const [isPhotoFullSizeContainerVisible, setIsPhotoFullSizeContainerVisible] = useState(false);
 
-    // useEffect(() => {
-    //     setIsLoading(null);
-    //     api.getUnsplashPhotos(query, pageNumber)
-    //         .then((response) => {
-    //             setIsLoading(false);
-    //             const unsplash = response.map((photo) => {
-    //                 return utils.createPhotoObject(
-    //                     "Unsplash",
-    //                     photo.links.html,
-    //                     photo.urls.regular,
-    //                     photo.urls.small,
-    //                     photo.alt_description,
-    //                     photo.user.name,
-    //                     photo.user.links.html
-    //                 );
-    //             })
-    //             setPhotos((currentPhotos) => {
-    //                 return [...currentPhotos, ...unsplash];
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setIsLoading(false);
-    //         })
-    // }, [pageNumber, query])
+    useEffect(() => {
+        setIsLoading(null);
+        api.getUnsplashPhotos(query, pageNumber)
+            .then((response) => {
+                setIsLoading(false);
+                const unsplash = response.map((photo) => {
+                    return utils.createPhotoObject(
+                        "Unsplash",
+                        photo.links.html,
+                        photo.urls.regular,
+                        photo.urls.small,
+                        photo.alt_description,
+                        photo.user.name,
+                        photo.user.links.html
+                    );
+                })
+                setPhotos((currentPhotos) => {
+                    return [...currentPhotos, ...unsplash];
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    }, [pageNumber, query])
 
     useEffect(() => {
         setIsLoading(null);
@@ -102,7 +103,7 @@ export default function Home({
 
     return (
         <div id="home">
-            {category === null && search === null
+            {category === null && search === null && tag === null
                 ? <Helmet>
                     <link rel="canonical" href="https://funnyphotos.co.uk/" />
                     <title>Find funny photos of almost anything • FunnyPhotos.co.uk</title>
@@ -114,21 +115,29 @@ export default function Home({
                 ? <Helmet>
                     <link rel="canonical" href={`https://funnyphotos.co.uk/?category=${category}`} />
                     <title>Funny {utils.convertSlugToHeading(category)} Photos • FunnyPhotos.co.uk</title>
-                    <meta name="description" content={`Browse funny ${utils.convertSlugToText(category)} photos on the Internet.`} />
+                    <meta name="description" content={`Browse funny ${utils.convertSlugToText(category)} photos from stock photo, photography, and media sites.`} />
+                </Helmet>
+                : null
+            }
+            {tag
+                ? <Helmet>
+                    <link rel="canonical" href={`https://funnyphotos.co.uk/?tag=${tag}`} />
+                    <title>Funny {utils.convertSlugToHeading(tag)} Photos • FunnyPhotos.co.uk</title>
+                    <meta name="description" content={`Browse funny ${utils.convertSlugToText(tag)} photos from stock photo, photography, and media sites.`} />
                 </Helmet>
                 : null
             }
             {search
                 ? <Helmet>
                     <link rel="canonical" href="https://funnyphotos.co.uk/" />
-                    <title>Search: '{search}'' • FunnyPhotos.co.uk</title>
+                    <title>Search: '{search}' • FunnyPhotos.co.uk</title>
                     <meta name="description" content="Browse funny photos of almost anything from stock photo, photography, and media sites." />
                 </Helmet>
                 : null
             }
             
             <div id="header-container">
-                {category === null && search === null
+                {category === null && search === null && tag === null
                     ? <header className="max-width">
                         <h1>Find funny photos of almost anything</h1>
                         <p>Browse funny photos from stock photo, photography, and media sites.</p>
@@ -138,6 +147,12 @@ export default function Home({
                 {category
                     ? <header className="max-width">
                         <h1>Funny {utils.convertSlugToHeading(category)} Photos</h1>
+                    </header>
+                    : null
+                }
+                {tag
+                    ? <header className="max-width">
+                        <h1>Funny {utils.convertSlugToHeading(tag)} Photos</h1>
                     </header>
                     : null
                 }

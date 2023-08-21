@@ -94,6 +94,8 @@ button {
 
 #logo-and-nav-container {
     background: var(--light-grey);
+    position: sticky;
+    top: 0;
 }
 
 #logo-and-nav {
@@ -282,6 +284,22 @@ main {
     cursor: pointer;
 }
 
+#tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#tags-container a:link,
+#tags-container a:active,
+#tags-container a:visited {
+    color: var(--night);
+}
+
+#tags-container a:hover {
+    text-decoration: underline;
+}
+
 footer {
     padding: var(--padding-left-and-right);
     display: grid;
@@ -345,7 +363,7 @@ footer a:hover {
     }
 
     #components-search-and-categories {
-        grid-template-columns: auto 20%;
+        grid-template-columns: auto 200px;
     }
 
     .footer-links {

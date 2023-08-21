@@ -5,6 +5,7 @@ import Logo from './components/Logo';
 import ShowNavButton from './components/ShowNavButton';
 import Nav from './components/Nav';
 import Home from './pages/Home';
+import Tags from './pages/Tags';
 import Footer from './components/Footer';
 import Contact from './pages/Contact';
 import TermsAndConditions from './pages/TermsAndConditions';
@@ -20,6 +21,7 @@ function App() {
     const [categoryInput, setCategoryInput] = useState("all-categories");
     const [isNavVisible, setIsNavVisible] = useState(false);
     const [searchInput, setSearchInput] = useState("");
+    const [tagInput, setTagInput] = useState("");
 
     console.log(query, "<------ query")
 
@@ -37,6 +39,7 @@ function App() {
                         categoryInput={categoryInput}
                         setCategoryInput={setCategoryInput}
                         setSearchInput={setSearchInput}
+                        tagInput={tagInput}
                     />
                     <Nav
                         isNavVisible={isNavVisible}
@@ -71,6 +74,22 @@ function App() {
                     }
                 ></Route>
                 <Route
+                    path="/tags"
+                    element={
+                        <Tags
+                            numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                            setQuery={setQuery}
+                            setPageNumber={setPageNumber}
+                            setPhotos={setPhotos}
+                            setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                            setPhotosToDisplay={setPhotosToDisplay}
+                            setCategoryInput={setCategoryInput}
+                            setSearchInput={setSearchInput}
+                            setTagInput={setTagInput}
+                        />
+                    }
+                ></Route>
+                <Route
                     path="/contact"
                     element={ <Contact /> }
                 ></Route>
@@ -89,6 +108,7 @@ function App() {
                 categoryInput={categoryInput}
                 setCategoryInput={setCategoryInput}
                 setSearchInput={setSearchInput}
+                tagInput={tagInput}
             />
         </div>
     );
