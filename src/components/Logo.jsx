@@ -9,10 +9,11 @@ export default function Logo({
     setPhotosToDisplay,
     categoryInput,
     setCategoryInput,
-    setSearchInput
+    setSearchInput,
+    tagInput
 }) {
     function handleLogo() {
-        if (categoryInput !== "all-categories") {
+        if (categoryInput !== "all-categories" || tagInput) {
             setQuery("funny");
             setPageNumber(1);
             setPhotos([]);

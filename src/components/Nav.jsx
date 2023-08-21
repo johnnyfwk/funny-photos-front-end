@@ -7,6 +7,7 @@ export default function Nav({ isNavVisible, setIsNavVisible }) {
 
     function handleNav() {
         window.scrollTo(0, 0);
+        setIsNavVisible(false);
     }
 
     const styleNavContainer = {
@@ -21,6 +22,7 @@ export default function Nav({ isNavVisible, setIsNavVisible }) {
             </div>
             <nav onClick={handleNav}>
                 <Link to="/" id="nav-link-home">Home</Link>
+                <Link to="/tags">Tags</Link>
                 <Link to="/contact">Contact</Link>
             </nav>
         </div>

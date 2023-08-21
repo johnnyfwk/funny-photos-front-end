@@ -9,11 +9,12 @@ export default function Footer({
     setPhotosToDisplay,
     categoryInput,
     setCategoryInput,
-    setSearchInput
+    setSearchInput,
+    tagInput
 }) {
     function handleFooterLinks() {
         window.scrollTo(0, 0);
-        if (categoryInput !== "all-categories") {
+        if (categoryInput !== "all-categories" || tagInput) {
             setQuery("funny");
             setPageNumber(1);
             setPhotos([]);
