@@ -13,6 +13,8 @@ export default function Tags({
     setSearchInput,
     setTagInput
 }) {
+    const tagsUniques = [... new Set(tags)];
+
     function handleTag(event) {
         setTagInput(event.target.innerText);
         setQuery("funny " + event.target.innerText);
@@ -43,7 +45,7 @@ export default function Tags({
             <div id="main-container">
                 <main className="max-width">
                     <div id="tags-container">
-                        {tags.map((tag) => {
+                        {tagsUniques.map((tag) => {
                             return <Link key={tag} to={`/?tag=${tag}`} onClick={handleTag}>{tag}</Link>
                         })}
                     </div>

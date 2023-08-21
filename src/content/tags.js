@@ -128,8 +128,10 @@ const tags = [
     "beaver",
     "turkey",
     "possum",
+    "possum",
+    "possum",
+    "possum",
+    "possum",
 ];
 
-const tagsSorted = [... new Set(tags)].sort();
-
-module.exports = tagsSorted;
+module.exports = tags.sort();
