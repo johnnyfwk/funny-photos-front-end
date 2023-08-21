@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import categories from "../content/categories";
 import * as utils from "../utils";
 
-export default function CategoryInput({
+export default function Categories({
     numberOfPhotosToDisplayAndIncrement,
     categoryInput,
     setCategoryInput,
@@ -10,7 +10,8 @@ export default function CategoryInput({
     setPageNumber,
     setPhotos,
     setNumberOfPhotosToDisplay,
-    setPhotosToDisplay
+    setPhotosToDisplay,
+    setSearchInput
 }) {
     const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export default function CategoryInput({
         setNumberOfPhotosToDisplay(numberOfPhotosToDisplayAndIncrement);
         setPhotos([]);
         setPhotosToDisplay([]);
+        setSearchInput("");
         if (event.target.value === "all-categories") {
             setQuery("funny");
             navigate("/");

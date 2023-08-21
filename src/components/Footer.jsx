@@ -8,13 +8,11 @@ export default function Footer({
     setNumberOfPhotosToDisplay,
     setPhotosToDisplay,
     categoryInput,
-    setCategoryInput
+    setCategoryInput,
+    setSearchInput
 }) {
     function handleFooterLinks() {
         window.scrollTo(0, 0);
-    }
-
-    function handleLinkHome() {
         if (categoryInput !== "all-categories") {
             setQuery("funny");
             setPageNumber(1);
@@ -22,13 +20,14 @@ export default function Footer({
             setNumberOfPhotosToDisplay(numberOfPhotosToDisplayAndIncrement);
             setPhotosToDisplay([]);
             setCategoryInput("all-categories");
+            setSearchInput("");
         }
     }
 
     return (
         <footer className="max-width">
             <div className="footer-links" onClick={handleFooterLinks}>
-                <Link to="/" onClick={handleLinkHome}>Home</Link>
+                <Link to="/">Home</Link>
                 <Link to="/contact">Contact</Link>
                 <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </div>

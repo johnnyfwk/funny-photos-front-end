@@ -3,9 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import LoadMoreButton from '../components/LoadMoreButton';
 import Photo from '../components/Photo';
-import CategoryInput from '../components/CategoryInput';
+import Categories from '../components/Categories';
 import * as api from "../api";
 import * as utils from "../utils";
+import Search from '../components/Search';
 
 export default function Home({
     numberOfPhotosToDisplayAndIncrement,
@@ -20,10 +21,13 @@ export default function Home({
     photosToDisplay,
     setPhotosToDisplay,
     categoryInput,
-    setCategoryInput
+    setCategoryInput,
+    searchInput,
+    setSearchInput
 }) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const category = searchParams.get("category");
+    const search = searchParams.get("search");
 
     const [isLoading, setIsLoading] = useState(null);
 
@@ -56,32 +60,32 @@ export default function Home({
     //         })
     // }, [pageNumber, query])
 
-    // useEffect(() => {
-    //     setIsLoading(null);
-    //     api.getPexelsPhotos(query, pageNumber)
-    //         .then((response) => {
-    //             setIsLoading(false);
-    //             const pexels = response.map((photo) => {
-    //                 return utils.createPhotoObject(
-    //                     "Pexels",
-    //                     photo.url,
-    //                     photo.src.original,
-    //                     photo.src.medium,
-    //                     photo.alt,
-    //                     photo.photographer,
-    //                     photo.photographer_url
-    //                 );
-    //             })
-    //             setPhotos((currentPhotos) => {
-    //                 setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
-    //                 return [...currentPhotos, ...pexels];
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setIsLoading(false);
-    //         })
-    // }, [pageNumber, query])
+    useEffect(() => {
+        setIsLoading(null);
+        api.getPexelsPhotos(query, pageNumber)
+            .then((response) => {
+                setIsLoading(false);
+                const pexels = response.map((photo) => {
+                    return utils.createPhotoObject(
+                        "Pexels",
+                        photo.url,
+                        photo.src.original,
+                        photo.src.medium,
+                        photo.alt,
+                        photo.photographer,
+                        photo.photographer_url
+                    );
+                })
+                setPhotos((currentPhotos) => {
+                    setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
+                    return [...currentPhotos, ...pexels];
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    }, [pageNumber, query])
 
     useEffect(() => {
         const updatedPhotosToDisplay = photos.slice(0, numberOfPhotosToDisplay);
@@ -98,30 +102,51 @@ export default function Home({
 
     return (
         <div id="home">
-            {category === null
+            {category === null && search === null
                 ? <Helmet>
                     <link rel="canonical" href="https://funnyphotos.co.uk/" />
                     <title>Find funny photos of almost anything • FunnyPhotos.co.uk</title>
                     <meta name="description" content="Browse funny photos of almost anything from stock photo, photography, and media sites." />
                 </Helmet>
-                : <Helmet>
+                : null
+            }
+            {category
+                ? <Helmet>
                     <link rel="canonical" href={`https://funnyphotos.co.uk/?category=${category}`} />
                     <title>Funny {utils.convertSlugToHeading(category)} Photos • FunnyPhotos.co.uk</title>
                     <meta name="description" content={`Browse funny ${utils.convertSlugToText(category)} photos on the Internet.`} />
                 </Helmet>
+                : null
+            }
+            {search
+                ? <Helmet>
+                    <link rel="canonical" href="https://funnyphotos.co.uk/" />
+                    <title>Search: '{search}'' • FunnyPhotos.co.uk</title>
+                    <meta name="description" content="Browse funny photos of almost anything from stock photo, photography, and media sites." />
+                </Helmet>
+                : null
             }
             
             <div id="header-container">
-                <header className="max-width">
-                    {category === null
-                        ? <h1>Find funny photos of almost anything</h1>
-                        : <h1>Funny {utils.convertSlugToHeading(category)} Photos</h1>
-                    }
-                    {category === null
-                        ? <p>Browse funny photos from stock photo, photography, and media sites.</p>
-                        : null
-                    }
-                </header>
+                {category === null && search === null
+                    ? <header className="max-width">
+                        <h1>Find funny photos of almost anything</h1>
+                        <p>Browse funny photos from stock photo, photography, and media sites.</p>
+                    </header>
+                    : null
+                }
+                {category
+                    ? <header className="max-width">
+                        <h1>Funny {utils.convertSlugToHeading(category)} Photos</h1>
+                    </header>
+                    : null
+                }
+                {search
+                    ? <header className="max-width">
+                        <h1>Search: '{search}'</h1>
+                    </header>
+                    : null
+                }
             </div>
 
             <div id="main-container">
@@ -131,16 +156,31 @@ export default function Home({
                         : null
                     }
 
-                    <CategoryInput
-                        numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
-                        categoryInput={categoryInput}
-                        setCategoryInput={setCategoryInput}
-                        setQuery={setQuery}
-                        setPageNumber={setPageNumber}
-                        setPhotos={setPhotos}
-                        setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
-                        setPhotosToDisplay={setPhotosToDisplay}
-                    />
+                    <div id="components-search-and-categories">
+                        <Search
+                            numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            setQuery={setQuery}
+                            setPageNumber={setPageNumber}
+                            setPhotos={setPhotos}
+                            setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                            setPhotosToDisplay={setPhotosToDisplay}
+                            setCategoryInput={setCategoryInput}
+                        />
+
+                        <Categories
+                            numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                            categoryInput={categoryInput}
+                            setCategoryInput={setCategoryInput}
+                            setQuery={setQuery}
+                            setPageNumber={setPageNumber}
+                            setPhotos={setPhotos}
+                            setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
+                            setPhotosToDisplay={setPhotosToDisplay}
+                            setSearchInput={setSearchInput}
+                        />
+                    </div>
 
                     {photosToDisplay.length === 0
                         ? <div>No photos to display.</div>

@@ -20,7 +20,7 @@ export default function Nav({ isNavVisible, setIsNavVisible }) {
                 <div></div>
             </div>
             <nav onClick={handleNav}>
-                <Link to="/">Home</Link>
+                <Link to="/" id="nav-link-home">Home</Link>
                 <Link to="/contact">Contact</Link>
             </nav>
         </div>
