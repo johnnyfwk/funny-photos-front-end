@@ -35,55 +35,55 @@ export default function Home({
     const [selectedPhoto, setSelectedPhoto] = useState({});
     const [isPhotoFullSizeContainerVisible, setIsPhotoFullSizeContainerVisible] = useState(false);
 
-    // useEffect(() => {
-    //     setIsLoading(true);
-    //     api.getPixabayPhotos(query, pageNumber)
-    //         .then((response) => {
-    //             setIsLoading(false);
-    //             const pixabay = response.map((photo) => {
-    //                 return utils.createPhotoObject(
-    //                     "Pixabay",
-    //                     photo.pageURL,
-    //                     photo.largeImageURL,
-    //                     photo.webformatURL,
-    //                     "",
-    //                     photo.user,
-    //                     ""
-    //                 );
-    //             });
-    //             setPhotos((currentPhotos) => {
-    //                 return [...currentPhotos, ...pixabay];
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setIsLoading(false);
-    //         })
+    useEffect(() => {
+        setIsLoading(true);
+        api.getPixabayPhotos(query, pageNumber)
+            .then((response) => {
+                setIsLoading(false);
+                const pixabay = response.map((photo) => {
+                    return utils.createPhotoObject(
+                        "Pixabay",
+                        photo.pageURL,
+                        photo.largeImageURL,
+                        photo.webformatURL,
+                        "",
+                        photo.user,
+                        ""
+                    );
+                });
+                setPhotos((currentPhotos) => {
+                    return [...currentPhotos, ...pixabay];
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            })
         
-    //     setIsLoading(true);
-    //     api.getPexelsPhotos(query, pageNumber)
-    //         .then((response) => {
-    //             setIsLoading(false);
-    //             const pexels = response.map((photo) => {
-    //                 return utils.createPhotoObject(
-    //                     "Pexels",
-    //                     photo.url,
-    //                     photo.src.original,
-    //                     photo.src.medium,
-    //                     photo.alt,
-    //                     photo.photographer,
-    //                     photo.photographer_url
-    //                 );
-    //             })
-    //             setPhotos((currentPhotos) => {
-    //                 return [...currentPhotos, ...pexels];
-    //             });
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setIsLoading(false);
-    //         })
-    // }, [pageNumber, query])
+        setIsLoading(true);
+        api.getPexelsPhotos(query, pageNumber)
+            .then((response) => {
+                setIsLoading(false);
+                const pexels = response.map((photo) => {
+                    return utils.createPhotoObject(
+                        "Pexels",
+                        photo.url,
+                        photo.src.original,
+                        photo.src.medium,
+                        photo.alt,
+                        photo.photographer,
+                        photo.photographer_url
+                    );
+                })
+                setPhotos((currentPhotos) => {
+                    return [...currentPhotos, ...pexels];
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    }, [pageNumber, query])
 
     useEffect(() => {
         setPhotosToDisplay(photos.slice(0, numberOfPhotosToDisplay));
