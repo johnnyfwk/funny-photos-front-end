@@ -252,7 +252,7 @@ main {
 }
 
 .photos-container img {
-    height: 25vh;
+    height: 30vh;
     flex-grow: 1;
     object-fit: cover;
     max-width: 100%;
@@ -370,6 +370,10 @@ footer a:hover {
 
     #components-search-and-categories {
         grid-template-columns: auto 30%;
+    }
+
+    .photos-container img {
+        height: 20vh;
     }
 
     #tags-container {
