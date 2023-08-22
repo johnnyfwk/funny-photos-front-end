@@ -369,7 +369,7 @@ footer a:hover {
     }
 
     #components-search-and-categories {
-        grid-template-columns: auto 200px;
+        grid-template-columns: auto 30%;
     }
 
     #tags-container {

@@ -36,7 +36,7 @@ export default function Home({
     const [isPhotoFullSizeContainerVisible, setIsPhotoFullSizeContainerVisible] = useState(false);
 
     useEffect(() => {
-        setIsLoading(null);
+        setIsLoading(true);
         api.getPixabayPhotos(query, pageNumber)
             .then((response) => {
                 setIsLoading(false);
@@ -59,11 +59,8 @@ export default function Home({
                 console.log(error);
                 setIsLoading(false);
             })
-    }, [pageNumber, query])
-
-    // Place this as the last useEffect so app displays correct number of photos
-    useEffect(() => {
-        setIsLoading(null);
+        
+        setIsLoading(true);
         api.getPexelsPhotos(query, pageNumber)
             .then((response) => {
                 setIsLoading(false);
@@ -79,7 +76,6 @@ export default function Home({
                     );
                 })
                 setPhotos((currentPhotos) => {
-                    setPhotosToDisplay([...currentPhotos, ...pexels].slice(0, numberOfPhotosToDisplay));
                     return [...currentPhotos, ...pexels];
                 });
             })
@@ -88,7 +84,10 @@ export default function Home({
                 setIsLoading(false);
             })
     }, [pageNumber, query])
-    // Place this as the last useEffect so app displays correct number of photos
+
+    useEffect(() => {
+        setPhotosToDisplay(photos.slice(0, numberOfPhotosToDisplay));
+    }, [photos])
 
     useEffect(() => {
         const updatedPhotosToDisplay = photos.slice(0, numberOfPhotosToDisplay);
