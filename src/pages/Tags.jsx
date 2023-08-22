@@ -46,7 +46,7 @@ export default function Tags({
                 <main className="max-width">
                     <div id="tags-container">
                         {tagsUniques.map((tag) => {
-                            return <Link key={tag} to={`/?tag=${tag}`} onClick={handleTag}>{tag}</Link>
+                            return <Link key={tag} to={`/?tag=${tag.replaceAll(" ", "-")}`} onClick={handleTag}>{tag}</Link>
                         })}
                     </div>
                 </main>
