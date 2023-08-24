@@ -29,15 +29,14 @@ function App() {
                 <div id="logo-and-nav" className="max-width">
                     <Logo
                         numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                        query={query}
                         setQuery={setQuery}
                         setPageNumber={setPageNumber}
                         setPhotos={setPhotos}
                         setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
                         setPhotosToDisplay={setPhotosToDisplay}
-                        categoryInput={categoryInput}
                         setCategoryInput={setCategoryInput}
                         setSearchInput={setSearchInput}
-                        tagInput={tagInput}
                     />
                     <Nav
                         isNavVisible={isNavVisible}
@@ -98,15 +97,14 @@ function App() {
             </Routes>
             <Footer
                 numberOfPhotosToDisplayAndIncrement={numberOfPhotosToDisplayAndIncrement}
+                query={query}
                 setQuery={setQuery}
                 setPageNumber={setPageNumber}
                 setPhotos={setPhotos}
                 setNumberOfPhotosToDisplay={setNumberOfPhotosToDisplay}
                 setPhotosToDisplay={setPhotosToDisplay}
-                categoryInput={categoryInput}
                 setCategoryInput={setCategoryInput}
                 setSearchInput={setSearchInput}
-                tagInput={tagInput}
             />
         </div>
     );

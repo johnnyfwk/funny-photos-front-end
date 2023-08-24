@@ -2,19 +2,18 @@ import { Link } from "react-router-dom";
 
 export default function Footer({
     numberOfPhotosToDisplayAndIncrement,
+    query,
     setQuery,
     setPageNumber,
     setPhotos,
     setNumberOfPhotosToDisplay,
     setPhotosToDisplay,
-    categoryInput,
     setCategoryInput,
-    setSearchInput,
-    tagInput
+    setSearchInput
 }) {
     function handleFooterLinks() {
         window.scrollTo(0, 0);
-        if (categoryInput !== "all-categories" || tagInput) {
+        if (query !== "funny") {
             setQuery("funny");
             setPageNumber(1);
             setPhotos([]);

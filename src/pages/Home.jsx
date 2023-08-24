@@ -102,6 +102,8 @@ export default function Home({
         display: isPhotoFullSizeContainerVisible ? "grid" : "none"
     }
 
+    console.log(query, "<------ query")
+
     return (
         <div id="home">
             {category === null && search === null && tag === null

@@ -218,7 +218,7 @@ header p {
 }
 
 main {
-    padding: var(--padding-left-and-right);
+    padding:  var(--padding-left-and-right) var(--padding-left-and-right) 40px var(--padding-left-and-right);
 }
 
 #home main {

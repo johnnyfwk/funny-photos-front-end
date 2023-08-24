@@ -2,18 +2,17 @@ import { Link } from "react-router-dom";
 
 export default function Logo({
     numberOfPhotosToDisplayAndIncrement,
+    query,
     setQuery,
     setPageNumber,
     setPhotos,
     setNumberOfPhotosToDisplay,
     setPhotosToDisplay,
-    categoryInput,
     setCategoryInput,
-    setSearchInput,
-    tagInput
+    setSearchInput
 }) {
     function handleLogo() {
-        if (categoryInput !== "all-categories" || tagInput) {
+        if (query !== "funny") {
             setQuery("funny");
             setPageNumber(1);
             setPhotos([]);
