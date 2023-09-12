@@ -3,7 +3,7 @@ import axios from 'axios';
 import { createClient } from 'pexels';
 
 export function getPexelsPhotos(query, pageNumber) {
-    const pexelsClient = createClient('FprQTrQvH9Qpa88qeEF6GDgKnwcWzoEd8Nixba1FqOGRKdMhfuGeIMda');
+    const pexelsClient = createClient(process.env.REACT_APP_PEXELS);
 
     const parameters = {
         query: query,
@@ -18,11 +18,11 @@ export function getPexelsPhotos(query, pageNumber) {
 }
 
 export function getPixabayPhotos(query, pageNumber) {
-    const API_KEY = '38972787-b7650a2df283868c71b057c94';
+    const apiKey = process.env.REACT_APP_PIXABAY;
     const urlEncodedQuery = query.replaceAll(" ", "+");
     // Max photos per request is 200
     return axios
-        .get(`https://pixabay.com/api/?key=${API_KEY}&q=${urlEncodedQuery}&page=${pageNumber}&per_page=200&image_type=photo`)
+        .get(`https://pixabay.com/api/?key=${apiKey}&q=${urlEncodedQuery}&page=${pageNumber}&per_page=200&image_type=photo`)
         .then((response) => {
             return response.data.hits;
         })
